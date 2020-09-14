@@ -1,0 +1,12 @@
+[Unit]
+Description=Peripheral input for game keyboard
+After=multi-user.target
+
+[Service]
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/git/pi-peripheral
+ExecStart=/usr/bin/python /home/pi/git/pi-peripheral/piperipheral.py
+
+[Install]
+WantedBy=multi-user.target
