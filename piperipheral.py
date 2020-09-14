@@ -9,22 +9,26 @@ def write_report(report):
     with open('/dev/hidg0', 'rb+') as fd:
         fd.write(report.encode())
 
-# Press a
-
-
-def say_hello():
-    write_report(NULL_CHAR*2+chr(4)+NULL_CHAR*5)
+def keyboard_do(letter):
+    write_report(NULL_CHAR*2+chr(letter)+NULL_CHAR*5)
     # Release keys
     write_report(NULL_CHAR*8)
 
-    print("Hello!")
+def button04_down():
+    keyboard_do(4) # a
 
-def say_goodbye():
-    print("Goodbye!")
+def switch04_on():
+    keyboard_do(5) # b
 
-button = Button(2)
+def switch04_off():
+    keyboard_do(6) # c
 
-button.when_pressed = say_hello
-button.when_released = say_goodbye
+button04 = Button(2)
+switch04 = Button(3)
+
+button04.when_pressed = button04_down
+
+switch04.when_pressed = switch04_on
+switch04.when_released = switch04_off
 
 pause()
