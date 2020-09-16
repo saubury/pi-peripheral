@@ -18,6 +18,8 @@ pip install -r requirements.txt
 # Configure Raspberry Pi Zero as a USB Keyboard (HID)
 Steps from https://randomnerdtutorials.com/raspberry-pi-zero-usb-keyboard-hid/
 
+http://wiki.micropython.org/USB-HID-Keyboard-mode-example-a-password-dongle
+
 ```
 pi@raspberrypi:~ $ echo "dtoverlay=dwc2" | sudo tee -a /boot/config.txt
 pi@raspberrypi:~ $ echo "dwc2" | sudo tee -a /etc/modules

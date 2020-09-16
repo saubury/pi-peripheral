@@ -4,10 +4,21 @@ from signal import pause
 import RPi.GPIO as GPIO 
 
 NULL_CHAR = chr(0)
+
+# Byte 0 is for a modifier key, or combination thereof. It is used as a bitmap, each bit mapped to a modifier:
+# bit 0: left control
+# bit 1: left shift
+# bit 2: left alt
+# bit 3: left GUI (Win/Apple/Meta key)
+# bit 4: right control
+# bit 5: right shift
+# bit 6: right alt
+# bit 7: right GUI
 MOD_NONE = NULL_CHAR
 MOD_CNTR = chr(1)
 MOD_SHFT = chr(2)
 KEY_NONE = 0
+
 
 
 gpio_button_map = dict([
@@ -36,11 +47,14 @@ def keyboard_do(letter, mod):
 
 def gpio_callback(channel):
     if GPIO.input(channel):     
+        # Button-RELEASE / Switch:DOWN
         key_id, mod_id = gpio_button_map[channel][2], gpio_button_map[channel][3]
     else:                 
+        # Button-PRESS / Switch:UP
         key_id, mod_id = gpio_button_map[channel][0], gpio_button_map[channel][1]
 
     if (key_id != KEY_NONE):
+        print('Key:{} Mod:{}'.format(key_id, mod_id))
         keyboard_do(key_id, mod_id)
         
 
