@@ -16,21 +16,29 @@ NULL_CHAR = chr(0)
 # bit 6: right alt
 # bit 7: right GUI
 MOD_NONE = NULL_CHAR
-MOD_CNTR = chr(int('000000001', 2))
-MOD_SHFT = chr(int('000000010', 2))
+MOD_L_CNTR = chr(int('000000001', 2))
+MOD_SHFT   = chr(int('000000010', 2))
+MOD_ALT    = chr(int('000000100', 2))
+MOD_R_CNTR = chr(int('000001000', 2))
 KEY_NONE = 0
 
-
+KEY_S = 22
+KEY_L = 15
+KEY_N = 17
+KEY_R = 21
+KEY_F = 9
+KEY_A = 4
+KEY_NUMPAD_DEL = 99
 
 gpio_button_map = dict([
-    (5, (4,MOD_NONE, KEY_NONE,MOD_NONE))    # Button 1
-  , (6, (5, MOD_NONE, 6,MOD_NONE))          # Switch 1
-  , (27, (7, MOD_NONE, KEY_NONE,MOD_NONE))  # Button 2
-  , (22, (8, MOD_NONE, 9,MOD_NONE))          # Switch 2
-  , (4, (10, MOD_NONE, KEY_NONE,MOD_NONE))  # Button 3
-  , (17, (11, MOD_NONE, 12,MOD_NONE))          # Switch 3
-  , (2, (13, MOD_NONE, KEY_NONE,MOD_NONE))  # Button 4
-  , (3, (14, MOD_NONE, 15,MOD_NONE))          # Switch 4
+    (5, (KEY_R,MOD_SHFT, KEY_NONE,MOD_NONE))    # Button 1
+  , (27, (KEY_F, MOD_L_CNTR, KEY_NONE,MOD_NONE))  # Button 2
+  , (4, (KEY_A, MOD_ALT, KEY_NONE,MOD_NONE))  # Button 3
+  , (2, (KEY_NUMPAD_DEL, MOD_L_CNTR, KEY_NONE,MOD_NONE))  # Button 4
+  , (6, (KEY_S,MOD_ALT, KEY_S,MOD_L_CNTR))  # Switch 1
+  , (22, (KEY_L, MOD_ALT, KEY_L,MOD_L_CNTR))          # Switch 2
+  , (17, (KEY_L, MOD_R_CNTR, KEY_L,MOD_SHFT))          # Switch 3
+  , (3, (KEY_N, MOD_ALT, KEY_N,MOD_L_CNTR))          # Switch 4
   ])
 
 
