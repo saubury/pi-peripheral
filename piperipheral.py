@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from signal import pause
+from time import sleep
 import RPi.GPIO as GPIO 
 
 NULL_CHAR = chr(0)
@@ -15,8 +16,8 @@ NULL_CHAR = chr(0)
 # bit 6: right alt
 # bit 7: right GUI
 MOD_NONE = NULL_CHAR
-MOD_CNTR = chr(1)
-MOD_SHFT = chr(2)
+MOD_CNTR = chr(int('000000001', 2))
+MOD_SHFT = chr(int('000000010', 2))
 KEY_NONE = 0
 
 
@@ -24,11 +25,11 @@ KEY_NONE = 0
 gpio_button_map = dict([
     (5, (4,MOD_NONE, KEY_NONE,MOD_NONE))    # Button 1
   , (6, (5, MOD_NONE, 6,MOD_NONE))          # Switch 1
-  , (27, (7, MOD_SHFT, KEY_NONE,MOD_NONE))  # Button 2
+  , (27, (7, MOD_NONE, KEY_NONE,MOD_NONE))  # Button 2
   , (22, (8, MOD_NONE, 9,MOD_NONE))          # Switch 2
-  , (4, (10, MOD_SHFT, KEY_NONE,MOD_NONE))  # Button 3
+  , (4, (10, MOD_NONE, KEY_NONE,MOD_NONE))  # Button 3
   , (17, (11, MOD_NONE, 12,MOD_NONE))          # Switch 3
-  , (2, (6, MOD_CNTR, KEY_NONE,MOD_NONE))  # Button 4
+  , (2, (13, MOD_NONE, KEY_NONE,MOD_NONE))  # Button 4
   , (3, (14, MOD_NONE, 15,MOD_NONE))          # Switch 4
   ])
 
@@ -43,6 +44,7 @@ def keyboard_release():
 
 def keyboard_do(letter, mod):
     write_report(mod + NULL_CHAR + chr(letter) + NULL_CHAR*5)
+    sleep(0.05)
     keyboard_release()
 
 def gpio_callback(channel):
