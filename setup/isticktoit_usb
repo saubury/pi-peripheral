@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# Script based on http://www.isticktoit.net/?p=1383
+
 cd /sys/kernel/config/usb_gadget/
 mkdir -p isticktoit
 cd isticktoit

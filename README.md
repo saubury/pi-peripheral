@@ -1,17 +1,21 @@
 
-_Pi Peripheral_ allows pysical buttons, switches and dials to control computer actions. Designed to add additional controls to games like _Microsoft Flight Simulator 2020_ - but can be used to control close to any keyboard activated activity. 
+_Pi Peripheral_ allows physical buttons, switches and dials to control computer actions. Designed to add additional controls to games like _Microsoft Flight Simulator 2020_ - but can be used to control close to any keyboard activated activity. 
 
-A Raspberry Pi Zero board acts as a HID (Human Interface Device) device - prentending to be a USB keyboard. Python code generates keypresses when GPIO events are triggered when buttons are activated. 
+A Raspberry Pi Zero board acts as a HID (Human Interface Device) device - pretending to be a USB keyboard. Python code generates key-presses when GPIO events are triggered when buttons are activated. 
 
-The Raspberry Pi Zero is identifed as an external keyboard and plugs in as a standard USB device (which also provides power to the Raspberry Pi Zero). 
+![Animated GIF showing box in usage](./docs/pi-demo.gif)
 
-# Box Enclosure
 
-![Outside view of box](./docs/box-outside.jpg)
+The Raspberry Pi Zero is identified as an external keyboard and plugs in as a standard USB device (which also provides power to the Raspberry Pi Zero). 
+
 
 # Wiring
 
 ![Wiring of GPIO](./docs/wiring.jpg)
+
+# Box Enclosure
+
+![Outside view of box](./docs/box-outside.jpg)
 
 
 # Installing USB Peripheral
@@ -46,11 +50,7 @@ Add this line to the second-last line of `/etc/rc.local` (just before the line c
 exit 0 
 ```
 
-After the file has been modified reboot the Pi
 
-```
-sudo chmod a+wr /dev/hidg0
-```
 
 # Installing the Pi Peripheral Service
 
@@ -62,6 +62,8 @@ sudo systemctl enable piperipheral.service
 sudo systemctl start piperipheral.service
 ```
 
+
+# Miscellaneous 
 General checks
 ```
 sudo systemctl status piperipheral.service

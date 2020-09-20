@@ -30,6 +30,10 @@ KEY_F = 9
 KEY_A = 4
 KEY_NUMPAD_DEL = 99
 
+
+# Key mapping in the form
+# (GPIO_ID, (press-key,press-key-modifier, release-key,release-key-modifier)) 
+
 gpio_button_map = dict([
     (5, (KEY_R,MOD_SHFT, KEY_NONE,MOD_NONE))    # Button 1
   , (27, (KEY_F, MOD_L_CNTR, KEY_NONE,MOD_NONE))  # Button 2
