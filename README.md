@@ -1,5 +1,23 @@
 
 
+# Box Enclosure
+
+![Outside view of box](./docs/box-outside.jpg)
+
+# Wiring
+
+![Wiring of GPIO](./docs/wiring.jpg)
+
+
+# Installing USB Peripheral
+
+![Windows 10 Pop up message](./docs/win10-usb-msg.png)
+
+# Game control binding
+
+![Windows 10 Pop up message](./docs/msfs-keyboard-binding.png)
+
+
 ## Python 3
 
 
