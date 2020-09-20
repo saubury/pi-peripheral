@@ -19,7 +19,7 @@ MOD_NONE = NULL_CHAR
 MOD_L_CNTR = chr(int('000000001', 2))
 MOD_SHFT   = chr(int('000000010', 2))
 MOD_ALT    = chr(int('000000100', 2))
-MOD_R_CNTR = chr(int('000001000', 2))
+MOD_R_CNTR = chr(int('000010000', 2))
 KEY_NONE = 0
 
 KEY_S = 22
