@@ -1,14 +1,19 @@
+# Pi Peripheral
 
-_Pi Peripheral_ allows physical buttons, switches and dials to control computer actions. Designed to add additional controls to games like _Microsoft Flight Simulator 2020_ - but can be used to control close to any keyboard activated activity. This can be used for gaming and simulations, home studios, video streaming - or anywhere where physical controls are preferable to using a keyboard.
+_Pi Peripheral_ allows physical buttons, switches and dials to control computer actions. 
 
-A Raspberry Pi Zero board acts as a HID (Human Interface Device) device - pretending to be a USB keyboard. Python code generates key-presses when GPIO events are triggered. With basic wiring, the Raspberry Pi has 28 GPIO pins suitable for controlling actions.
+Why would you want to do this? Well you might want to add some additional buttons or switches to your favorite game. Or maybe you can streamline your video production but switching cameras with a foot pedal. For me, I wanted to add tactile controls to _Microsoft Flight Simulator 2020_.  Switches for the landing gear, beacons and lights. 
+
+In short, _Pi Peripheral_ can be used to control close to any keyboard activated activity - anywhere where physical controls are preferable to using a keyboard.
 
 ![Animated GIF showing box in usage](./docs/pi-demo.gif)
 
 
-The Raspberry Pi Zero is identified as an external keyboard and plugs in as a standard USB device (which also provides power to the Raspberry Pi Zero). 
 
 # Pi Peripheral - Hardware
+
+A Raspberry Pi Zero board acts as a HID (Human Interface Device) device - pretending to be a USB keyboard. Python code generates key-presses when GPIO events are triggered. With basic wiring, the Raspberry Pi has 28 GPIO pins suitable for controlling actions.
+
 
 ## Wiring
 The Raspberry Pi is very easy to wire up to switches and push buttons. Each only requires a single connection to a spare GPIO pin, and a common ground. Software will configure the GPIO pin as an input. There is no need to a physical pull up resistor - this can be configured in software.
@@ -16,7 +21,7 @@ The Raspberry Pi is very easy to wire up to switches and push buttons. Each only
 ![Wiring of GPIO](./docs/schematic.png)
 
 
-### Power
+## Power
 Both power and USB host (USB OTG) are provided by a single  micro-USB port. Use the port labeled "USB" (_not_ the one labeled "Power").
 
 ![Wiring of GPIO](./docs/wiring.jpg)
@@ -55,6 +60,46 @@ All going well, you can not connect the _Pi Peripheral_ and it should be identif
 
 
 
+
+## Configuring Key Presses
+The `piperipheral.py` Python code places events against each GPIO input. An event is fired when either the circuit is completed (button is pressed or the switch is flicked on) or when the circuit is disconnected (button is released or the switch is off).
+
+A keypress is composed of a keyboard code (which represents a key on a keyboard) and a modifier (such as the Shift or control key). To produce a capital *B*, we would need to send the key code of `5` (for the letter _b_) and a modifier value of `00000010` (left Shift).
+
+![USB HID keyboard codes](./docs/usb-hid.png)
+
+
+For the entire mapping look at [usb.org](https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf)
+
+### Keyboard Modifiers
+
+| Bit | Decimal | Modifier key |
+|-----|---------|--------------|
+| 0   | 1       | left control |
+| 1   | 2       | left shift   |
+| 2   | 4       | left alt     |
+| 3   | 8       | Win/Apple     |
+| 4   | 16      | right control    |
+| 5   | 32      | right shift     |
+
+
+
+### GPIO to key mappings
+The GPIO line to key mapping is held in a Python collection
+
+```python
+# Key mapping in the form
+# GPIO_ID, (press-key,press-key-modifier, release-key,release-key-modifier) 
+
+GPIO_BUTTON_1 = 6
+KEY_B = 5
+
+gpio_button_map = dict([
+    (GPIO_BUTTON_1, (KEY_B,MOD_ALT, KEY_B,MOD_L_CNTR))  
+  ])
+```
+
+
 ## Installing the Pi Peripheral Service
 Now the Raspberry Pi is acting like a USB Keyboard, we need to send some key commands. The _Pi Peripheral_ is a Python programmed installed as a service
 
@@ -66,25 +111,18 @@ sudo systemctl enable piperipheral.service
 sudo systemctl start piperipheral.service
 ```
 
-## Configuring Key Pressess
-
-```python
-# Key mapping in the form
-# (GPIO_ID, (press-key,press-key-modifier, release-key,release-key-modifier)) 
-
-gpio_button_map = dict([
-    (6, (KEY_S,MOD_ALT, KEY_S,MOD_L_CNTR))  
-  ])
-```
-
 ## Game control binding
+
+This will be specific to your game or program. In _Microsoft Flight Simulator 2020_ you can customize controls with this setup window.
 
 ![Windows 10 Pop up message](./docs/msfs-keyboard-binding.png)
 
 
 
-# Miscellaneous 
-General checks
+## Miscellaneous 
+
+General checks for determining what's going on with the service.
+
 ```
 sudo systemctl status piperipheral.service
 sudo journalctl -u piperipheral.service -b
